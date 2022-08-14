@@ -156,9 +156,9 @@ async function checkChain() {
 
 async function loadInfo() {
   console.log("loading info...");
-  window.info = await window.contract.methods.getInfo().call();
-  const publicMintActive = await contract.methods.mintingActive().call();
-  const presaleMintActive = await contract.methods.presaleActive().call();
+  // window.info = await window.contract.methods.getInfo().call();
+  const publicMintActive = true
+  const presaleMintActive = true
   const mainHeading = document.getElementById("mainHeading");
   const subHeading = document.getElementById("subHeading");
   const mainText = document.getElementById("mainText");
@@ -176,7 +176,7 @@ async function loadInfo() {
     mintContainer.classList.remove('hidden');
     setTotalPrice();
   } else if (presaleMintActive) {
-    startTime = window.info.runtimeConfig.publicMintStart;
+    startTime = publicMintDate;
     mainHeading.innerText = h1_presale_mint;
     subHeading.innerText = h2_presale_mint;
     
@@ -203,7 +203,7 @@ async function loadInfo() {
     }
     setTotalPrice();
   } else {
-    startTime = window.info.runtimeConfig.presaleMintStart;
+    startTime = presaleMintDate;
     mainHeading.innerText = h1_presale_coming_soon;
     subHeading.innerText = h2_presale_coming_soon;
     mainText.innerText = p_presale_coming_soon;
