@@ -229,16 +229,16 @@ async function loadInfo() {
   } else if (chain === 'polygon') {
     priceType = 'MATIC';
   }
-  const price = web3.utils.fromWei(0.01, 'ether');
+  const price = web3.utils.fromWei(publicMintPrice, 'ether');
   const pricePerMint = document.getElementById("pricePerMint");
   const maxPerMint = document.getElementById("maxPerMint");
   const totalSupply = document.getElementById("totalSupply");
   const mintInput = document.getElementById("mintInput");
   
   pricePerMint.innerText = `${price} ${priceType}`;
-  maxPerMint.innerText = `${10}`;
-  totalSupply.innerText = `${5000}`;
-  mintInput.setAttribute("max", 10);
+  maxPerMint.innerText = `${tokensPerMint}`;
+  totalSupply.innerText = `${maxSupply}`;
+  mintInput.setAttribute("max", tokensPerMint);
 
   // MINT INPUT
   const mintIncrement = document.getElementById("mintIncrement");
@@ -280,13 +280,13 @@ function setTotalPrice() {
   const mintInputValue = parseInt(mintInput.value);
   const totalPrice = document.getElementById("totalPrice");
   const mintButton = document.getElementById("mintButton");
-  if(mintInputValue < 1 || mintInputValue > 10) {
+  if(mintInputValue < 1 || mintInputValue > tokensPerMint) {
     totalPrice.innerText = 'INVALID QUANTITY';
     mintButton.disabled = true;
     mintInput.disabled = true;
     return;
   }
-  const totalPriceWei = BigInt(0.01) * BigInt(mintInputValue);
+  const totalPriceWei = BigInt(publicMintPrice) * BigInt(mintInputValue);
   
   let priceType = '';
   if(chain === 'rinkeby' || chain === 'ethereum') {
@@ -307,7 +307,7 @@ async function mint() {
   mintButton.innerHTML = spinner;
 
   const amount = parseInt(document.getElementById("mintInput").value);
-  const value = BigInt(0.01) * BigInt(amount);
+  const value = BigInt(publicMintPrice) * BigInt(amount);
   const publicMintActive = await contract.methods.mintingActive().call();
   const presaleMintActive = await contract.methods.presaleActive().call();
 
