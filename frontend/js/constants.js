@@ -2,8 +2,8 @@ const contractAddress = "0x90e458eC57cf74d82c63Be729B093645CF58D5c5"; // Replace
 const chain = 'rinkeby'; // rinkeby, polygon, or ethereum
 const publicMintDate = "2022-08-12T11:30:48+00:00"; 
 const presaleMintDate = "2022-08-11T11:30:48+00:00";
-const publicMintPrice = 10000000000000000;
-const presalePrice = 10000000000000000;
+const publicMintPrice = "10000000000000000";
+const presalePrice = "10000000000000000";
 const tokensPerMint = 10;
 const maxSupply = 5000;
 
