@@ -1,7 +1,5 @@
 const contractAddress = "0x90e458eC57cf74d82c63Be729B093645CF58D5c5"; // Replace with your own contract address
 const chain = 'rinkeby'; // rinkeby, polygon, or ethereum
-const publicMintDate = "2022-08-12T11:30:48+00:00"; 
-const presaleMintDate = "2022-08-11T11:30:48+00:00";
 
 const welcome_h1 = "Welcome to the CodeCats NFT Project!!";
 const welcome_h2 = "Connect to MetaMask to Get Started";
