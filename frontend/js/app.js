@@ -156,7 +156,7 @@ async function checkChain() {
 
 async function loadInfo() {
   console.log("loading info...");
-  // window.info = await window.contract.methods.getInfo().call();
+  window.info = await window.contract.methods.getInfo().call();
   const publicMintActive = true
   const presaleMintActive = true
   const mainHeading = document.getElementById("mainHeading");
@@ -308,7 +308,11 @@ async function mint() {
 
   const amount = parseInt(document.getElementById("mintInput").value);
   const value = BigInt(publicMintPrice) * BigInt(amount);
-  const publicMintActive = await window.contract.methods.mintingActive().call() ?? "na";
+  try {
+    const publicMintActive = await window.contract.methods.mintingActive().call() ?? "na";
+  }catch (err){
+    console.log(err);
+  }
   console.log(publicMintActive);
   const presaleMintActive = await window.contract.methods.presaleActive().call();
 
