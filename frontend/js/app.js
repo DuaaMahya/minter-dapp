@@ -156,9 +156,9 @@ async function checkChain() {
 
 async function loadInfo() {
   console.log("loading info...");
-  window.info = await window.contract.methods.getInfo().call();
-  const publicMintActive = await contract.methods.mintingActive().call();
-  const presaleMintActive = await contract.methods.presaleActive().call();
+  // window.info = await window.contract.methods.getInfo().call();
+  const publicMintActive = true
+  const presaleMintActive = true
   const mainHeading = document.getElementById("mainHeading");
   const subHeading = document.getElementById("subHeading");
   const mainText = document.getElementById("mainText");
@@ -176,7 +176,7 @@ async function loadInfo() {
     mintContainer.classList.remove('hidden');
     setTotalPrice();
   } else if (presaleMintActive) {
-    startTime = window.info.runtimeConfig.publicMintStart;
+    startTime = publicMintDate;
     mainHeading.innerText = h1_presale_mint;
     subHeading.innerText = h2_presale_mint;
     
@@ -203,7 +203,7 @@ async function loadInfo() {
     }
     setTotalPrice();
   } else {
-    startTime = window.info.runtimeConfig.presaleMintStart;
+    startTime = presaleMintDate;
     mainHeading.innerText = h1_presale_coming_soon;
     subHeading.innerText = h2_presale_coming_soon;
     mainText.innerText = p_presale_coming_soon;
@@ -229,16 +229,16 @@ async function loadInfo() {
   } else if (chain === 'polygon') {
     priceType = 'MATIC';
   }
-  const price = web3.utils.fromWei(info.runtimeConfig.publicMintPrice, 'ether');
+  const price = web3.utils.fromWei(0.01, 'ether');
   const pricePerMint = document.getElementById("pricePerMint");
   const maxPerMint = document.getElementById("maxPerMint");
   const totalSupply = document.getElementById("totalSupply");
   const mintInput = document.getElementById("mintInput");
   
   pricePerMint.innerText = `${price} ${priceType}`;
-  maxPerMint.innerText = `${info.deploymentConfig.tokensPerMint}`;
-  totalSupply.innerText = `${info.deploymentConfig.maxSupply}`;
-  mintInput.setAttribute("max", info.deploymentConfig.tokensPerMint);
+  maxPerMint.innerText = `${10}`;
+  totalSupply.innerText = `${5000}`;
+  mintInput.setAttribute("max", 10);
 
   // MINT INPUT
   const mintIncrement = document.getElementById("mintIncrement");
@@ -280,13 +280,13 @@ function setTotalPrice() {
   const mintInputValue = parseInt(mintInput.value);
   const totalPrice = document.getElementById("totalPrice");
   const mintButton = document.getElementById("mintButton");
-  if(mintInputValue < 1 || mintInputValue > info.deploymentConfig.tokensPerMint) {
+  if(mintInputValue < 1 || mintInputValue > 10) {
     totalPrice.innerText = 'INVALID QUANTITY';
     mintButton.disabled = true;
     mintInput.disabled = true;
     return;
   }
-  const totalPriceWei = BigInt(info.runtimeConfig.publicMintPrice) * BigInt(mintInputValue);
+  const totalPriceWei = BigInt(0.01) * BigInt(mintInputValue);
   
   let priceType = '';
   if(chain === 'rinkeby' || chain === 'ethereum') {
@@ -307,7 +307,7 @@ async function mint() {
   mintButton.innerHTML = spinner;
 
   const amount = parseInt(document.getElementById("mintInput").value);
-  const value = BigInt(info.runtimeConfig.publicMintPrice) * BigInt(amount);
+  const value = BigInt(0.01) * BigInt(amount);
   const publicMintActive = await contract.methods.mintingActive().call();
   const presaleMintActive = await contract.methods.presaleActive().call();
 
